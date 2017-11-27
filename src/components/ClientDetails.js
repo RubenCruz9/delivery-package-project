@@ -14,7 +14,6 @@ export default class ClientDetails extends React.Component {
       this.state = {
         data: this.props.navigation.state.params.data2,
       };
-      console.log(this.state.data.nombre);
     }
 
   // componentDidMount(){
@@ -39,17 +38,15 @@ export default class ClientDetails extends React.Component {
     return (
     <Image source={{uri:img}} style={styles.container}>
     <Container>
-    <Content>
-      <View>
+    <Content style={styles.topInfo}>
         <Thumbnail style={styles.image} large source={{uri: 'http://hd.wallpaperswide.com/thumbs/blurry_blue_background_2-t2.jpg'}} />
         <Text style={styles.title}>{this.state.data.firstname} {this.state.data.lastname}</Text>
-
-        </View>
     </Content>
     <Content>
 
-    <Tabs initialPage={1}>
-      <Tab heading="Informacion">
+    <Tabs initialPage={0} style={styles.optiontap}>
+      <Tab heading="Informacion" >
+      <Image source={{uri:img}} style={styles.container}>
       <Content scrollEnabled={true}>
       <Text style={styles.subTitle}> Id Cliente : {this.state.data._id}</Text>
       <Text style={styles.subTitle}> Empresa : {this.state.data.company}</Text>
@@ -58,9 +55,15 @@ export default class ClientDetails extends React.Component {
       <Text style={styles.subTitle}> Celular : {this.state.data.mobile}</Text>
       <Text style={styles.subTitle}> Direccion : {this.state.data.address.street}, {this.state.data.address.city},{this.state.data.address.country}</Text>
       </ Content>
+      </Image>
       </Tab>
 
       <Tab heading="Ordenes">
+      <Image source={{uri:img}} style={styles.container}>
+      <Content scrollEnabled={true}>
+
+      </ Content>
+      </Image>
 
       </Tab>
 
@@ -76,7 +79,7 @@ export default class ClientDetails extends React.Component {
 const styles = StyleSheet.create({
 
         container: {
-            flex: 1,
+            flex: 5,
 
         },
         title: {
@@ -84,6 +87,7 @@ const styles = StyleSheet.create({
             marginTop: 20,
             fontSize: 25,
             width: 325,
+            marginBottom: -40,
             textAlign: 'center',
             backgroundColor: 'rgba(0,0,0,0)',
 
@@ -99,11 +103,15 @@ const styles = StyleSheet.create({
         },
         image: {
             alignItems: 'center',
-            marginTop: 60,
+            marginTop: 40,
             marginLeft: 140,
         },
         optiontap: {
-            marginTop: 30,
+            marginTop: 1,
+            //backgroundColor: '#778899',
+        },
+        topInfo: {
+            marginBottom: -180,
             //backgroundColor: '#778899',
         },
     });

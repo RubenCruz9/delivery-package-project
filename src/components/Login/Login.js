@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import { AppRegistry, StyleSheet, Text, View, Image, KeyboardAvoidingView, NavigatorIOS,TextInput, statusBar} from 'react-native';
 import { Container, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input } from "native-base";
 import { NavigationActions } from 'react-navigation';
-import api from '../SellerMenu.js';
+// import api from '../SellerMenu.js';
 import LoginForm from './LoginForm';
+import SellerMenu from '../SellerMenu.js';
+import api from '../../Utilities/api.js';
+
 
 const remote = 'https://www.colourbox.com/preview/11938474-fast-delivery-truck-icon-on-white-background.jpg';
 const remote2 = 'http://hd.wallpaperswide.com/thumbs/blurry_blue_background_2-t2.jpg';
@@ -20,10 +23,41 @@ export default class Login extends React.Component {
   constructor(props){
     super(props);
     this.state={
+      data: [],
+      email : '',
+      password : ''
 
     };
   }
 
+  // componentWillMount(){
+  //   api.getRovers().then((res)=> {
+  //         this.setState({
+  //             data: res
+  //         })
+  //     });
+  // }
+  validation(){
+    // var email = 'Alexis@gmail.com';
+    // var password = 'Alex12300';
+    if (this.state.email.trim() && this.state.password.trim()) {
+      api.validateUser(this.state.email.trim(), this.state.password.trim()).then((res)=> {
+              if (res && res.tipo) {
+                if (res.tipo=='vendedor') {
+                    this.props.navigation.navigate('SellerPantalla', {})
+                }
+                else{
+                  console.log(res.tipo);
+                }
+              } else {
+                alert('Usuario o contrasena incorrecta')
+              }
+      });
+    } else {
+      alert('Llene los campos de email y contrasena')
+    }
+
+  };
   render() {
     const { navigate } = this.props.navigation;
 
@@ -43,7 +77,8 @@ export default class Login extends React.Component {
                   onSubmitEditing={() => this.passwordImput.focus()}
                   autoCapitalize='none'
                   autoCorrect={false}
-                  style={styles.input}/>
+                  style={styles.input}
+                  onChangeText={(email) => this.setState({email})}/>
 
                 <TextInput
                   placeholder="Password"
@@ -51,11 +86,13 @@ export default class Login extends React.Component {
                   retunKeyType="go"
                   secureTextEntry
                   style={styles.input}
-                  ref={(imput) => this.passwordImput = imput }/>
+                  ref={(imput) => this.passwordImput = imput }
+                  onChangeText={(password) => this.setState({password})}/>
 
                   <Button light
-                    onPress={() => this.props.navigation.navigate('SellerPantalla', {})
-                  }><Text> Login </Text></Button>
+                      onPress={() => this.validation()}
+                    // onPress={() => this.props.navigation.navigate('SellerPantalla', {})
+                  ><Text> Login </Text></Button>
 
           </View>
         </KeyboardAvoidingView>
@@ -96,7 +133,7 @@ const styles = StyleSheet.create({
     height: 100
   },
   input: {
-    height: 35,
+    height: 40,
     backgroundColor: '#bdc3c7',
     marginBottom:8,
     color: 'white',

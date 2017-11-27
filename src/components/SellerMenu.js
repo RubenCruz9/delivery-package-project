@@ -21,7 +21,7 @@ export default class SellerMenu extends React.Component {
     <Container>
 
       <Header hasTabs />
-      <Tabs initialPage={1}>
+      <Tabs initialPage={0}>
         <Tab heading="Clientes">
           <ClientList navigation={this.props.navigation} />
         </Tab>
