@@ -4,8 +4,18 @@ import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Conten
 import ClientList from './ClientList';
 import CreateOrder from './CreateOrder';
 import OrderList from './OrderList';
+import ProductList from './ProductList';
 
 export default class SellerMenu extends React.Component {
+
+  constructor(props){
+    super(props);
+    //console.log(props);
+    this.state={
+
+    };
+  }
+
   render() {
     return (
     <Container>
@@ -13,7 +23,7 @@ export default class SellerMenu extends React.Component {
       <Header hasTabs />
       <Tabs initialPage={1}>
         <Tab heading="Clientes">
-          <ClientList />
+          <ClientList navigation={this.props.navigation} />
         </Tab>
 
         <Tab heading="Crear Orden">
@@ -23,6 +33,10 @@ export default class SellerMenu extends React.Component {
       <Tab heading="Ordenes">
         <OrderList/>
       </Tab>
+
+    <Tab heading="Productos">
+      <ProductList navigation={this.props.navigation}/>
+    </Tab>
     </Tabs>
 
       </Container>

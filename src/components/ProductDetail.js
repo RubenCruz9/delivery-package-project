@@ -1,69 +1,98 @@
 import React from 'react';
-import{ App, Platform, StyleSheet, AppRegistry, View, TextInput,Image, TouchableOpacity, AsyncStorage } from 'react-native';
-import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input } from "native-base";
+import{App, Platform, StyleSheet, AppRegistry, View, Image} from 'react-native';
+import { Container, Thumbnail,Text, Button, Header, Left, Right, Body, Title, Item, Content,Footer, FooterTab, Icon, List, ListItem, Input } from "native-base";
+import api from '../Utilities/api.js';
+
+const img = 'https://medialoot.com/preview/atmosphere-app-backgrounds/img/iphone-3.jpg';
 
 
+export default class ProductDetails extends React.Component {
 
-export default class ProductDetail extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {
+        data: this.props.navigation.state.params.data2,
+      };
+      //console.log(this.state.data.nombre);
+    }
+
+  // componentDidMount(){
+  //   api.getRovers().then((res)=>{
+  //     this.setState({
+  //       data: res
+  //     })
+  //   })
+  // }
+
   render() {
+    if (!this.state.data) {
+      return (
+        <View style={styles.container}>
+            <Text>
+              Loading...
+            </Text>
+          </View>
+      );
+    }
+
     return (
-      <Container>
-      <Header>
-        <Left>
-          <Button transparent>
-            <Icon name='arrow-back' />
-          </Button>
-        </Left>
-        <Body>
-          <Title>Producto</Title>
-        </Body>
-        <Right>
-          <Button transparent>
-            <Text></Text>
-          </Button>
-        </Right>
-      </Header>
-      <Text style={styles.subTitle}> Id Producto : </Text>
-      <Item regular>
-        <Input placeholder='Id Producto'/>
-        </Item>
-      <Text style={styles.subTitle}> Tipo : </Text>
-      <Text style={styles.subTitle}> Modelo : </Text>
-      <Text style={styles.subTitle}> Precio : </Text>
-      <Text style={styles.subTitle}> Cantidad Disponible : </Text>
-      </Container>
+    <Image source={{uri:img}} style={styles.container}>
+      <View>
+        <Thumbnail style={styles.image} large source={{uri: this.state.data.url}} />
+        <Text style={styles.title}>{this.state.data.name}</Text>
+        <
+        Footer style={styles.optiontap}>
+            <FooterTab>
+              <Button vertical>
+                <Text style={styles.subTitle}>Informacion</Text>
+              </Button>
+              <Button vertical>
+                <Text style={styles.subTitle}>Ordenes</Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+
+        <Text style={styles.subTitle}> Id : {this.state.data._id}</Text>
+        <Text style={styles.subTitle}> Categoria : {this.state.data.category}</Text>
+        <Text style={styles.subTitle}> Cantidad : {this.state.data.quantity}</Text>
+        <Text style={styles.subTitle}> Precio :  {this.state.data.price} {this.state.data.currency}</Text>
+        </View>
+      </Image>
+
     );
   }
 }
-
 const styles = StyleSheet.create({
 
         container: {
             flex: 1,
-            padding: 30,
-            backgroundColor: '#bdc3c7',
+
         },
         title: {
             color: 'black',
             marginTop: 20,
-            marginBottom: 30,
-            fontSize: 20,
+            fontSize: 25,
             width: 325,
             textAlign: 'center',
+            backgroundColor: 'rgba(0,0,0,0)',
+
         },
         subTitle: {
             color: 'black',
-            marginTop: 15,
+            marginTop: 10,
+            marginLeft: 10,
             marginBottom: 15,
             fontSize: 15,
-            textAlign: 'left'
+            textAlign: 'left',
+            backgroundColor: 'rgba(0,0,0,0)',
         },
-
-        button:{
-            height: 40,
-            width:250,
-           backgroundColor: "black",
-            paddingHorizontal: 100,
-            marginTop: 600
-        }
+        image: {
+            alignItems: 'center',
+            marginTop: 60,
+            marginLeft: 140,
+        },
+        optiontap: {
+            marginTop: 30,
+            //backgroundColor: '#778899',
+        },
     });

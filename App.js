@@ -13,46 +13,72 @@ import OrdersDetails from './src/components/OrdersDetails.js';
 import SellerMenu from './src/components/SellerMenu.js';
 import DriverMenu from './src/components/DriverMenu.js';
 import TestApi from './src/components/TestApi.js';
+import ProductList from './src/components/ProductList.js';
 
-export default class App extends React.Component {
-  //
+import {StackNavigator} from 'react-navigation';
 
-fetchData = async()=> {
-  const response = await fetch('https://randomuser.me/api?results=10');
-  const json = await response.json();
-  this.setState({data: json.results});
-}
+const Navigation = StackNavigator({
 
-  render() {
-const App = (props)=>{
+LoginPantalla : {
+  screen: Login
+  },
+SellerPantalla: {
+  screen: SellerMenu
+  },
+ListaClientePantalla: {
+  screen: ClientList
+  },
+DetalleClientePantalla: {
+  screen: ClientDetails
+  },
+ListaProductoPantalla: {
+  screen: ProductList
+  },
+DetalleProductoPantalla: {
+  screen: ProductDetail
+  },
 
-}
 
-    return (
-      //<View style={StyleSheet.container}>
-      //<OrdersDetails/>
-      //<CreateOrder/>
-      //<ClientList/>
-      //<ProductDetail/>
-      <ClientDetails/>
-      //<SellerMenu/>
-      //<DriverMenu/>
-      //<TestApi/>
-      //<Test/>
-      //<Login></Login>
 
-      // <FlatList
-      //   data={this.state.data}
-      //   keyExtractior={(x,i) => i}
-      //   renderItem={({item}) =>
-      //   <Text>
-      //     {`${item.name.fist} ${item.name.last}`}
-      //   </Text>}
-      // />
-      // </View>
-    );
-  }
-}
+
+
+
+
+});
+
+export default Navigation;
+
+// export default class App extends React.Component {
+//
+//
+//   render() {
+//
+//
+//     return (
+//       //<View style={StyleSheet.container}>
+//       //<OrdersDetails/>
+//       //<CreateOrder/>
+//       //<ClientList/>
+//       //<ProductDetail/>
+//       //<ClientDetails/>
+//       //<SellerMenu/>
+//       //<DriverMenu/>
+//       //<TestApi/>
+//       //<Test/>
+//       <Login></Login>
+//
+//       // <FlatList
+//       //   data={this.state.data}
+//       //   keyExtractior={(x,i) => i}
+//       //   renderItem={({item}) =>
+//       //   <Text>
+//       //     {`${item.name.fist} ${item.name.last}`}
+//       //   </Text>}
+//       // />
+//       // </View>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {

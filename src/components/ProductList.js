@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import api from '../Utilities/api.js';
 
 
-export default class ClientList extends React.Component {
+export default class ProductList extends React.Component {
 
       constructor(props){
           super(props);
@@ -21,11 +21,11 @@ export default class ClientList extends React.Component {
           (props) => { navigate };
           const data2 = _data;
           console.log(navigate);
-          navigate('DetalleClientePantalla', {data2});
+          navigate('DetalleProductoPantalla', {data2});
       }
 
       componentWillMount(){
-        api.getRovers().then((res)=> {
+        api.getProduct().then((res)=> {
               this.setState({
                   data: res
               })
@@ -39,8 +39,8 @@ export default class ClientList extends React.Component {
             <View style={styles.container}>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                   <TouchableOpacity style={styles.buttonContainer} onPress={() => this.PasarDatosVista(objCustomer)}>
-                      <Text style={styles.buttonText}> {objCustomer.nombre} {objCustomer.apellido} </Text>
-                      <Text note> id: {objCustomer._id} </Text>
+                      <Text style={styles.buttonText}> {objCustomer.name} </Text>
+                      <Text note>    {objCustomer.category} </Text>
                   </TouchableOpacity>
                   <View style={{ width: 50, height: 80, backgroundColor: 'gray', marginTop: 10 }} />
               </View>
@@ -60,7 +60,7 @@ export default class ClientList extends React.Component {
           return (
             <Container>
               <Header>
-                <Text style={styles.title}>prueba </Text>
+                <Text style={styles.title}>Lista Producto </Text>
               </Header>
               <ScrollView contentContainerStyle={styles.contentContainer}>
                   <View style={styles.container}>

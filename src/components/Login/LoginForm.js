@@ -1,12 +1,24 @@
-import React from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, statusBar} from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, View, TextInput, TouchableOpacity, statusBar,TouchableHighlight } from 'react-native';
 import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input } from "native-base";
-
+import { NavigationActions } from 'react-navigation';
+import api from '../SellerMenu.js';
 
 export default class LoginForm extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+
+    };
+  }
+
   render() {
+    //const { navigate } = this.props.navigation;
+    // (props) => {navigate};
+
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
 
         <TextInput
           placeholder="Username"
@@ -26,10 +38,11 @@ export default class LoginForm extends React.Component {
           ref={(imput) => this.passwordImput = imput }/>
 
           <Button light
-            onPress={()=> navigate ('SellerMenu')}><Text> Login </Text></Button>
+            onPress={() => this.props.navigation.navigate('SellerPantalla', {})
+          }><Text> Login </Text></Button>
 
 
-      </View>
+      </Container>
 
 
     );

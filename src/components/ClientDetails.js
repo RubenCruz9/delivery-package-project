@@ -1,6 +1,7 @@
 import React from 'react';
 import{App, Platform, StyleSheet, AppRegistry, View, Image} from 'react-native';
-import { Container, Thumbnail,Text, Button, Header, Left, Right, Body, Title, Item, Content,Footer, FooterTab, Icon, List, ListItem, Input } from "native-base";
+import { Container, Thumbnail,Text, Button, Header, Left, Right,
+   Body, Title, Item, Content,Footer, FooterTab, Icon, List, ListItem, Input, Tab, Tabs } from "native-base";
 import api from '../Utilities/api.js';
 
 const img = 'https://medialoot.com/preview/atmosphere-app-backgrounds/img/iphone-3.jpg';
@@ -11,20 +12,18 @@ export default class ClientDetails extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        data: null,
-        name:"",
+        data: this.props.navigation.state.params.data2,
       };
+      console.log(this.state.data.nombre);
     }
 
-  componentDidMount(){
-    api.getRovers().then((res)=>{
-      this.setState({
-        data: res
-      })
-      // this.state.name = this.state.data[0].basic_info.nombre;
-      // console.log(this.state.name);
-    })
-  }
+  // componentDidMount(){
+  //   api.getRovers().then((res)=>{
+  //     this.setState({
+  //       data: res
+  //     })
+  //   })
+  // }
 
   render() {
     if (!this.state.data) {
@@ -39,25 +38,36 @@ export default class ClientDetails extends React.Component {
 
     return (
     <Image source={{uri:img}} style={styles.container}>
+    <Container>
+    <Content>
       <View>
         <Thumbnail style={styles.image} large source={{uri: 'http://hd.wallpaperswide.com/thumbs/blurry_blue_background_2-t2.jpg'}} />
-        <Text style={styles.title}>{this.state.data.basic_info.nombre} {this.state.data.basic_info.appellido}</Text>
-        <
-        Footer style={styles.optiontap}>
-            <FooterTab>
-              <Button vertical>
-                <Text style={styles.subTitle}>Informacion</Text>
-              </Button>
-              <Button vertical>
-                <Text style={styles.subTitle}>Ordenes</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
+        <Text style={styles.title}>{this.state.data.firstname} {this.state.data.lastname}</Text>
 
-        <Text style={styles.subTitle}> Id Cliente : {this.state.data._id}</Text>
-        <Text style={styles.subTitle}> Email : {this.state.data.basic_info.email}</Text>
-        <Text style={styles.subTitle}> Direccion : </Text>
         </View>
+    </Content>
+    <Content>
+
+    <Tabs initialPage={1}>
+      <Tab heading="Informacion">
+      <Content scrollEnabled={true}>
+      <Text style={styles.subTitle}> Id Cliente : {this.state.data._id}</Text>
+      <Text style={styles.subTitle}> Empresa : {this.state.data.company}</Text>
+      <Text style={styles.subTitle}> Email : {this.state.data.email}</Text>
+      <Text style={styles.subTitle}> Telefono : {this.state.data.phone}</Text>
+      <Text style={styles.subTitle}> Celular : {this.state.data.mobile}</Text>
+      <Text style={styles.subTitle}> Direccion : {this.state.data.address.street}, {this.state.data.address.city},{this.state.data.address.country}</Text>
+      </ Content>
+      </Tab>
+
+      <Tab heading="Ordenes">
+
+      </Tab>
+
+  </Tabs>
+
+        </Content>
+        </Container>
       </Image>
 
     );
