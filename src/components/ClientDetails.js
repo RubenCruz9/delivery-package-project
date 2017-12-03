@@ -47,6 +47,7 @@ export default class ClientDetails extends React.Component {
     <Tabs initialPage={0} style={styles.optiontap}>
       <Tab heading="Informacion" >
       <Image source={{uri:img}} style={styles.container}>
+      <Content >
       <Content scrollEnabled={true}>
       <Text style={styles.subTitle}> Id Cliente : {this.state.data._id}</Text>
       <Text style={styles.subTitle}> Empresa : {this.state.data.company}</Text>
@@ -54,6 +55,7 @@ export default class ClientDetails extends React.Component {
       <Text style={styles.subTitle}> Telefono : {this.state.data.phone}</Text>
       <Text style={styles.subTitle}> Celular : {this.state.data.mobile}</Text>
       <Text style={styles.subTitle}> Direccion : {this.state.data.address.street}, {this.state.data.address.city},{this.state.data.address.country}</Text>
+</Content>
       </ Content>
       </Image>
       </Tab>

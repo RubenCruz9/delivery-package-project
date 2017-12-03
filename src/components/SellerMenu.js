@@ -1,6 +1,6 @@
 import React from 'react';
 import{App, Platform, StyleSheet, AppRegistry} from 'react-native';
-import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input, Tab, Tabs } from "native-base";
+import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input, Tab, Tabs,ScrollableTab } from "native-base";
 import ClientList from './ClientList';
 import CreateOrder from './CreateOrder';
 import OrderList from './OrderList';
@@ -20,8 +20,8 @@ export default class SellerMenu extends React.Component {
     return (
     <Container>
 
-      <Header hasTabs />
-      <Tabs initialPage={0}>
+
+      <Tabs initialP age={0} renderTabBar={()=> <ScrollableTab />}>
         <Tab heading="Clientes">
           <ClientList navigation={this.props.navigation} />
         </Tab>
@@ -31,11 +31,12 @@ export default class SellerMenu extends React.Component {
         </Tab>
 
       <Tab heading="Ordenes">
-        <OrderList/>
+        <OrderList navigation={this.props.navigation}/>
       </Tab>
 
     <Tab heading="Productos">
       <ProductList navigation={this.props.navigation}/>
+
     </Tab>
     </Tabs>
 

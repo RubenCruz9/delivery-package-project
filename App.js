@@ -5,15 +5,19 @@ import { StyleSheet, Text, View, Navigator,TouchableHighlight, FlatList} from 'r
 import Login from './src/components/Login/Login.js';
 import Test from './src/components/Test.js';
 import ClientDetails from './src/components/ClientDetails.js';
-import Orders from './src/components/Orders.js';
+//import Orders from './src/components/Orders.js';
 import CreateOrder from './src/components/CreateOrder.js';
 import ProductDetail from './src/components/ProductDetail.js';
 import ClientList from './src/components/ClientList.js';
-import OrdersDetails from './src/components/OrdersDetails.js';
+import OrderDetails from './src/components/OrderDetails.js';
 import SellerMenu from './src/components/SellerMenu.js';
 import DriverMenu from './src/components/DriverMenu.js';
 import TestApi from './src/components/TestApi.js';
 import ProductList from './src/components/ProductList.js';
+import RutaView from './src/components/RutaView.js';
+import InvoiceList from './src/components/InvoiceList.js';
+import SignatureV from './src/components/SignatureV.js';
+import MapsView from './src/components/MapsView.js';
 
 import {StackNavigator} from 'react-navigation';
 
@@ -37,7 +41,18 @@ ListaProductoPantalla: {
 DetalleProductoPantalla: {
   screen: ProductDetail
   },
-
+PantallaChofer: {
+  screen: DriverMenu
+},
+DetalleOrden: {
+  screen: OrderDetails
+},
+PantallaFirma:{
+  screen: SignatureV
+},
+PantallaMapa:{
+  screen: MapsView
+}
 
 
 

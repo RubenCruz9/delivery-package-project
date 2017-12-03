@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, statusBar, ScrollView} from 'react-native';
-import { Container, Header, Content, Button, Icon, List, ListItem, Text } from 'native-base';
+import { Container, Header, Content, Button, Icon, List, ListItem, Text, Item, Input } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
 import api from '../Utilities/api.js';
@@ -39,7 +39,7 @@ export default class ClientList extends React.Component {
             <View style={styles.container}>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                   <TouchableOpacity style={styles.buttonContainer} onPress={() => this.PasarDatosVista(objCustomer)}>
-                      <Text style={styles.buttonText}> {objCustomer.nombre} {objCustomer.apellido} </Text>
+                      <Text style={styles.buttonText}> {objCustomer.firstname} {objCustomer.lastname} </Text>
                       <Text note> id: {objCustomer._id} </Text>
                   </TouchableOpacity>
                   <View style={{ width: 50, height: 80, backgroundColor: 'gray', marginTop: 10 }} />
@@ -59,14 +59,22 @@ export default class ClientList extends React.Component {
 
           return (
             <Container>
-              <Header>
-                <Text style={styles.title}>prueba </Text>
-              </Header>
+            <Header searchBar rounded>
+              <Item>
+                <Icon name="search" />
+                <Input placeholder="Search" />
+              </Item>
+              <Button transparent>
+                <Text>Search</Text>
+              </Button>
+            </Header>
+            <Content>
               <ScrollView contentContainerStyle={styles.contentContainer}>
                   <View style={styles.container}>
                           { payments }
                   </View>
               </ScrollView>
+              </Content>
             </Container>
           );
       }

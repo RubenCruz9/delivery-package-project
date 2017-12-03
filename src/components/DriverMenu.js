@@ -1,7 +1,7 @@
 import React from 'react';
 import{App, Platform, StyleSheet, AppRegistry} from 'react-native';
 import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input, Tab, Tabs } from "native-base";
-import ClientList from './ClientList';
+import InvoiceList from './InvoiceList';
 import CreateOrder from './CreateOrder';
 import OrderList from './OrderList';
 
@@ -10,14 +10,13 @@ export default class DriverMenu extends React.Component {
     return (
     <Container>
 
-      <Header hasTabs />
-      <Tabs initialPage={1}>
+      <Tabs initialPage={0}>
         <Tab heading="Ordenes">
-          <OrderList />
+          <OrderList navigation={this.props.navigation}/>
         </Tab>
 
         <Tab heading="Facturas">
-          <CreateOrder/>
+          <InvoiceList navigation={this.props.navigation}/>
         </Tab>
 
       <Tab heading="Mapa">

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { AppRegistry, StyleSheet, Text, View, Image, KeyboardAvoidingView, NavigatorIOS,TextInput, statusBar} from 'react-native';
 import { Container, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input } from "native-base";
 import { NavigationActions } from 'react-navigation';
-// import api from '../SellerMenu.js';
 import LoginForm from './LoginForm';
 import SellerMenu from '../SellerMenu.js';
+import DriverMenu from '../SellerMenu.js';
 import api from '../../Utilities/api.js';
 
 
-const remote = 'https://www.colourbox.com/preview/11938474-fast-delivery-truck-icon-on-white-background.jpg';
+const remote = 'https://d30y9cdsu7xlg0.cloudfront.net/png/100245-200.png';
 const remote2 = 'http://hd.wallpaperswide.com/thumbs/blurry_blue_background_2-t2.jpg';
 
 export default class Login extends React.Component {
@@ -40,6 +40,9 @@ export default class Login extends React.Component {
   validation(){
     // var email = 'Alexis@gmail.com';
     // var password = 'Alex12300';
+this.props.navigation.navigate('SellerPantalla', {})
+//this.props.navigation.navigate('PantallaChofer', {})
+
     if (this.state.email.trim() && this.state.password.trim()) {
       api.validateUser(this.state.email.trim(), this.state.password.trim()).then((res)=> {
               if (res && res.tipo) {
@@ -47,7 +50,7 @@ export default class Login extends React.Component {
                     this.props.navigation.navigate('SellerPantalla', {})
                 }
                 else{
-                  console.log(res.tipo);
+                  this.props.navigation.navigate('PantallaChofer', {})
                 }
               } else {
                 alert('Usuario o contrasena incorrecta')
@@ -63,8 +66,9 @@ export default class Login extends React.Component {
 
     return (
       <Image source={{uri : remote2}} style={styles.container}>
+
         <KeyboardAvoidingView  behavior="padding">
-          <View style={styles.logoContainer}>
+          <Container style={styles.logoContainer}>
             <Image
               style={styles.logo}
               /*source={require('../../images/LoginLogo.png')}*/
@@ -90,11 +94,12 @@ export default class Login extends React.Component {
                   onChangeText={(password) => this.setState({password})}/>
 
                   <Button light
+                  style={styles.buttonContainer}
                       onPress={() => this.validation()}
                     // onPress={() => this.props.navigation.navigate('SellerPantalla', {})
                   ><Text> Login </Text></Button>
 
-          </View>
+          </Container>
         </KeyboardAvoidingView>
       </Image>
     );
@@ -130,26 +135,31 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 100,
-    height: 100
+    height: 100,
+    alignItems: 'center',
+    marginBottom: 80
   },
   input: {
     height: 40,
     backgroundColor: '#bdc3c7',
     marginBottom:8,
     color: 'white',
-    paddingHorizontal: 70,
+    paddingHorizontal: 90,
     //borderWidth: 20
   },
   buttonContainer: {
     padding: 80,
     backgroundColor: '#34495e',
     paddingVertical: 10,
-    marginTop: 8
+    marginTop: 8,
+    alignItems: 'center',
+    marginLeft: 30
   },
   buttonText: {
     textAlign: 'center',
     color: "#FFFFFF",
-    fontWeight: "700"
+    fontWeight: "700",
+
   }
 
 });

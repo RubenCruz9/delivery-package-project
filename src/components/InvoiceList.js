@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import api from '../Utilities/api.js';
 
 
-export default class ProductList extends React.Component {
+export default class InvoiceList extends React.Component {
 
       constructor(props){
           super(props);

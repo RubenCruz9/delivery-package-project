@@ -1,30 +1,120 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, List, ListItem, Text } from 'native-base';
+import { StyleSheet, View, TextInput, TouchableOpacity, statusBar, ScrollView} from 'react-native';
+import { Container, Header, Content, Button, Icon, List, ListItem, Text,Item,Input } from 'native-base';
+import { NavigationActions } from 'react-navigation';
+
+import api from '../Utilities/api.js';
+
 export default class ListDividerExample extends Component {
+  constructor(props){
+      super(props);
+      this.state = {
+          data: []
+      }
+  }
+
+  PasarDatosVista(_data)
+  {
+      const { navigate } = this.props.navigation;
+      (props) => { navigate };
+      const data2 = _data;
+      console.log(navigate);
+      navigate('DetalleOrden', {data2});
+  }
+
+  componentWillMount(){
+    api.getRovers().then((res)=> {
+          this.setState({
+              data: res
+          })
+      });
+  }
+
+  renderClient = (objCustomer) => {
+      const { navigate } = this.props.navigation;
+      return (
+      <View key = {objCustomer._id}>
+        <View style={styles.container}>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+              <TouchableOpacity style={styles.buttonContainer} onPress={() => this.PasarDatosVista(objCustomer)}>
+                  <Text style={styles.buttonText}> {objCustomer.firstname} {objCustomer.lastname}</Text>
+                  <Text note>    {objCustomer._id} </Text>
+              </TouchableOpacity>
+              <View style={{ width: 50, height: 80, backgroundColor: 'gray', marginTop: 10 }} />
+          </View>
+        </View>
+      </View>
+      );
+  }
+
   render() {
-    return (
-      <Container>
-        <Header />
+      var payments =[]
+
+      for (let x in this.state.data)
+      {
+          payments.push(this.renderClient(this.state.data[x]))
+      }
+
+      return (
+        <Container>
+        <Header searchBar rounded>
+          <Item>
+            <Icon name="search" />
+            <Input placeholder="Search" />
+          </Item>
+          <Button transparent>
+            <Text>Search</Text>
+          </Button>
+        </Header>
         <Content>
-          <List>
-            <ListItem itemDivider>
-              <Text>Ordenes Pendientes</Text>
-            </ListItem>
-            <ListItem >
-              <Text>Ordene 1</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Ordene 2</Text>
-            </ListItem>
-            <ListItem itemDivider>
-              <Text>Ordenes Aprobadas</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Ordene 5</Text>
-            </ListItem>
-          </List>
-        </Content>
-      </Container>
-    );
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+              <View style={styles.container}>
+                      { payments }
+              </View>
+          </ScrollView>
+          </Content>
+        </Container>
+      );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      backgroundColor: '#607D8B'
+
+  },
+
+
+  title: {
+      color: 'black',
+       marginTop:4,
+      // width: 360,
+      // fontSize: 35,
+      textAlign: 'center'
+  },
+
+  buttonContainer: {
+      flex: 10,
+      marginTop: 10,
+      backgroundColor: '#34495e',
+      paddingVertical: 15,
+      width: 300
+  },
+
+  buttonText: {
+
+      color: '#FFFFFF',
+      fontSize: 18,
+      fontWeight: '800',
+      marginLeft: 3
+  },
+
+  contentContainer: {
+      paddingVertical: 2
+  }
+
+
+
+
+});

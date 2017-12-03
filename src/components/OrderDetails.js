@@ -1,69 +1,154 @@
 import React from 'react';
-import{
-App, Platform, StyleSheet, AppRegistry, Text, View, TextInput,Image, TouchableOpacity, AsyncStorage,Button
-} from 'react-native';
+import{App, Platform, StyleSheet, AppRegistry, View, Image} from 'react-native';
+import { Container, Thumbnail,Text, Button, Header, Left, Right,
+   Body, Title, Item, Content,Footer, FooterTab, Icon, List, ListItem, Input, Tab, Tabs,Radio } from "native-base";
+import api from '../Utilities/api.js';
+
+const img = 'https://medialoot.com/preview/atmosphere-app-backgrounds/img/iphone-3.jpg';
 
 
-export default class OrdersDetails extends React.Component {
+export default class OrderDetails extends React.Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {
+        data: this.props.navigation.state.params.data2,
+        cheque: false,
+      };
+    }
+
+    PasarDatosVista(_data)
+    {
+        const { navigate } = this.props.navigation;
+        (props) => { navigate };
+        const data2 = _data;
+        console.log(navigate);
+        navigate('DetalleProductoPantalla', {data2});
+    }
+
   render() {
+
     return (
-      <Container>
-      <Header>
-        <Left>
-          <Button transparent>
-            <Icon name='arrow-back' />
-          </Button>
-        </Left>
-        <Body>
-          <Title>Detalle Orden</Title>
-        </Body>
-        <Right>
-          <Button transparent>
-            <Text></Text>
-          </Button>
-        </Right>
-      </Header>
-      <Text style={styles.subTitle}> Id Producto : </Text>
-      <Item regular>
-        <Input placeholder='Id Producto'/>
-        </Item>
-      <Text style={styles.subTitle}> Id Orden : </Text>
-      <Text style={styles.subTitle}> Cotnacto : </Text>
-      <Text style={styles.subTitle}> Telefono : </Text>
-      <Text style={styles.subTitle}> Direccion : </Text>
-      <Text style={styles.subTitle}> Vendedor : </Text>
-      </Container>
+    <Image source={{uri:img}} style={styles.container}>
+    <Container>
+    <Content style={styles.topInfo}>
+
+    <Text style={styles.title}> {this.state.data.firstname} {this.state.data.lastname}</Text>
+    <Text style={styles.subTitle}> Id Factura : {this.state.data._id}</Text>
+    <Text style={styles.subTitle2}> Id Cliente : {this.state.data._id}</Text>
+    <Text style={styles.subTitle2}> Telefono : {this.state.data.phone}</Text>
+    <Text style={styles.subTitle2}> Direccion : {this.state.data.address.street} {this.state.data.address.state}</Text>
+
+    <Button light
+      onPress={() => this.props.navigation.navigate('PantallaMapa', {})}>
+          <Text>GoogleMaps</Text>
+    </Button>
+
+    </Content>
+    <Content>
+
+    <Tabs initialPage={0} style={styles.optiontap}>
+      <Tab heading="Productos" >
+      <Image source={{uri:img}} style={styles.container}>
+      <Content>
+      <Content scrollEnabled={true}>
+
+
+</Content>
+      </ Content>
+      </Image>
+      </Tab>
+
+      <Tab heading="Pago">
+      <Image source={{uri:img}} style={styles.container}>
+      <Content scrollEnabled={true}>
+      <Text style={styles.subTitle}> Monto: </Text>
+      <Text style={styles.subTitle2} style={{ marginLeft: 125 }}> Metodo de Pago</Text>
+      <View style={{ marginTop: 20, flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={styles.radioButon}>Efectivo</Text>
+          <Right>
+            <Radio selected={ !this.state.cheque }/>
+          </Right>
+
+        <Text>Cheque</Text>
+          <Right>
+            <View style={{flex: 1}} onPress={() => {
+              this.setState({ cheque: !this.state.cheque});
+            }}>
+            <Radio selected={ this.state.cheque } />
+            </View>
+          </Right>
+      </View>
+
+      <Button light style={{ marginTop: 40, marginLeft: 150}}
+      onPress={() => this.props.navigation.navigate('PantallaFirma', {})}>
+            <Text>Firma</Text>
+      </Button>
+
+      </ Content>
+      </Image>
+
+      </Tab>
+
+  </Tabs>
+
+        </Content>
+        </Container>
+      </Image>
+
     );
   }
 }
 const styles = StyleSheet.create({
 
         container: {
-            flex: 1,
-            padding: 30,
-            backgroundColor: '#bdc3c7',
+            flex: 5,
+
         },
         title: {
             color: 'black',
             marginTop: 20,
-            marginBottom: 30,
-            fontSize: 20,
+            fontSize: 25,
             width: 325,
+            marginBottom: -40,
             textAlign: 'center',
+            backgroundColor: 'rgba(0,0,0,0)',
+
         },
         subTitle: {
             color: 'black',
-            marginTop: 15,
+            marginTop: 60,
+            marginLeft: 10,
             marginBottom: 15,
             fontSize: 15,
-            textAlign: 'left'
+            textAlign: 'left',
+            backgroundColor: 'rgba(0,0,0,0)',
         },
-
-        button:{
-            height: 40,
-            width:250,
-           backgroundColor: "black",
-            paddingHorizontal: 100,
-            marginTop: 600
-        }
+        subTitle2: {
+            color: 'black',
+            marginTop: 9,
+            marginLeft: 10,
+            marginBottom: 15,
+            fontSize: 15,
+            textAlign: 'left',
+            backgroundColor: 'rgba(0,0,0,0)',
+        },
+        image: {
+            alignItems: 'center',
+            marginTop: 40,
+            marginLeft: 140,
+        },
+        optiontap: {
+            marginTop: 75,
+            //backgroundColor: '#778899',
+        },
+        topInfo: {
+            marginBottom: -180,
+            //backgroundColor: '#778899',
+        },
+        radioButon: {
+            marginLeft: 30,
+            // marginTop: 20,
+            //backgroundColor: '#778899',
+        },
     });
