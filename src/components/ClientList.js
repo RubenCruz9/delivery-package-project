@@ -35,12 +35,12 @@ export default class ClientList extends React.Component {
       renderClient = (objCustomer) => {
           const { navigate } = this.props.navigation;
           return (
-          <View key = {objCustomer._id}>
+          <View key = {objCustomer.Id}>
             <View style={styles.container}>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                   <TouchableOpacity style={styles.buttonContainer} onPress={() => this.PasarDatosVista(objCustomer)}>
-                      <Text style={styles.buttonText}> {objCustomer.firstname} {objCustomer.lastname} </Text>
-                      <Text note> id: {objCustomer._id} </Text>
+                      <Text style={styles.buttonText}> {objCustomer.GivenName} {objCustomer.FamilyName} </Text>
+                      <Text note> id: {objCustomer.Id} </Text>
                   </TouchableOpacity>
                   <View style={{ width: 50, height: 80, backgroundColor: 'gray', marginTop: 10 }} />
               </View>
@@ -68,13 +68,16 @@ export default class ClientList extends React.Component {
                 <Text>Search</Text>
               </Button>
             </Header>
+
             <Content>
               <ScrollView contentContainerStyle={styles.contentContainer}>
                   <View style={styles.container}>
                           { payments }
                   </View>
               </ScrollView>
+              
               </Content>
+
             </Container>
           );
       }

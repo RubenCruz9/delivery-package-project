@@ -35,12 +35,12 @@ export default class ProductList extends React.Component {
       renderClient = (objCustomer) => {
           const { navigate } = this.props.navigation;
           return (
-          <View key = {objCustomer._id}>
+          <View key = {objCustomer.Id}>
             <View style={styles.container}>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                   <TouchableOpacity style={styles.buttonContainer} onPress={() => this.PasarDatosVista(objCustomer)}>
-                      <Text style={styles.buttonText}> {objCustomer.name} </Text>
-                      <Text note>    {objCustomer.category} </Text>
+                      <Text style={styles.buttonText}> {objCustomer.Name} </Text>
+                      <Text note>    {objCustomer.Description} </Text>
                   </TouchableOpacity>
                   <View style={{ width: 50, height: 80, backgroundColor: 'gray', marginTop: 10 }} />
               </View>

@@ -24,15 +24,19 @@ import getDirections from 'react-native-google-maps-directions';
 
 export default class MapsView extends React.Component {
 
+  constructor(props) {
+      super(props);
+      this.state = {
+        data: props.navigation.state.params
+      };
+      console.log(this.state.data);
+  }
+
   handleGetDirections = () => {
     const data = {
-      source: {
-        latitude: -33.8356372,
-        longitude: 18.6947617
-      },
       destination: {
-        latitude: -33.8600024,
-        longitude: 18.697459
+        latitude: this.state.data.Latitude * 1,
+        longitude: this.state.data.Longitude * 1
       },
       params: [
         {

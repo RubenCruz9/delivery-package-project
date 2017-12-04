@@ -13,16 +13,7 @@ export default class ProductDetails extends React.Component {
       this.state = {
         data: this.props.navigation.state.params.data2,
       };
-      //console.log(this.state.data.nombre);
     }
-
-  // componentDidMount(){
-  //   api.getRovers().then((res)=>{
-  //     this.setState({
-  //       data: res
-  //     })
-  //   })
-  // }
 
   render() {
     if (!this.state.data) {
@@ -39,7 +30,7 @@ export default class ProductDetails extends React.Component {
     <Image source={{uri:img}} style={styles.container}>
       <View>
         <Thumbnail style={styles.image} large source={{uri: this.state.data.url}} />
-        <Text style={styles.title}>{this.state.data.name}</Text>
+        <Text style={styles.title}>{this.state.data.Name}</Text>
         <
         Footer style={styles.optiontap}>
             <FooterTab>
@@ -52,10 +43,10 @@ export default class ProductDetails extends React.Component {
             </FooterTab>
           </Footer>
 
-        <Text style={styles.subTitle}> Id : {this.state.data._id}</Text>
-        <Text style={styles.subTitle}> Categoria : {this.state.data.category}</Text>
+        <Text style={styles.subTitle}> Id : {this.state.data.Id}</Text>
+        <Text style={styles.subTitle}> Categoria : {this.state.data.Description}</Text>
         <Text style={styles.subTitle}> Cantidad : {this.state.data.quantity}</Text>
-        <Text style={styles.subTitle}> Precio :  {this.state.data.price} {this.state.data.currency}</Text>
+        <Text style={styles.subTitle}> Precio :  {this.state.data.UnitPrice} {this.state.data.currency}</Text>
         </View>
       </Image>
 

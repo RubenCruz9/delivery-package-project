@@ -23,8 +23,17 @@ export default class OrderDetails extends React.Component {
         (props) => { navigate };
         const data2 = _data;
         console.log(navigate);
-        navigate('DetalleProductoPantalla', {data2});
+        navigate('DetalleClientePantalla', {data2});
     }
+
+    componentWillMount(){
+      if (this.state.data.CustomerRef) {
+        api.getCustomer(this.state.data.CustomerRef.value).then((res)=> {
+              this.state.data["CustomerObj"] = res;
+        });
+      }
+    }
+
 
   render() {
 
@@ -33,16 +42,10 @@ export default class OrderDetails extends React.Component {
     <Container>
     <Content style={styles.topInfo}>
 
-    <Text style={styles.title}> {this.state.data.firstname} {this.state.data.lastname}</Text>
-    <Text style={styles.subTitle}> Id Factura : {this.state.data._id}</Text>
-    <Text style={styles.subTitle2}> Id Cliente : {this.state.data._id}</Text>
-    <Text style={styles.subTitle2}> Telefono : {this.state.data.phone}</Text>
-    <Text style={styles.subTitle2}> Direccion : {this.state.data.address.street} {this.state.data.address.state}</Text>
+    <Text style={styles.title}> {this.state.data.CustomerRef ? this.state.data.CustomerRef.name : 'Tiburcio'}</Text>
+    <Text style={styles.subTitle}> Id Factura : {this.state.data.Id}</Text>
+    <Text style={styles.subTitle}> Telefono : </Text>
 
-    <Button light
-      onPress={() => this.props.navigation.navigate('PantallaMapa', {})}>
-          <Text>GoogleMaps</Text>
-    </Button>
 
     </Content>
     <Content>
@@ -52,7 +55,10 @@ export default class OrderDetails extends React.Component {
       <Image source={{uri:img}} style={styles.container}>
       <Content>
       <Content scrollEnabled={true}>
-
+      <Button light
+        onPress={() => this.PasarDatosVista(this.state.data.CustomerObj)}>
+            <Text>GoogleMaps</Text>
+      </Button>
 
 </Content>
       </ Content>
@@ -152,3 +158,10 @@ const styles = StyleSheet.create({
             //backgroundColor: '#778899',
         },
     });
+
+
+    //
+    // <Button light
+    //   onPress={() => this.props.navigation.navigate('PantallaMapa', {})}>
+    //       <Text>GoogleMaps</Text>
+    // </Button>

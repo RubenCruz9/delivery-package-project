@@ -23,7 +23,7 @@ export default class ListDividerExample extends Component {
   }
 
   componentWillMount(){
-    api.getRovers().then((res)=> {
+    api.getOrders().then((res)=> {
           this.setState({
               data: res
           })
@@ -33,12 +33,12 @@ export default class ListDividerExample extends Component {
   renderClient = (objCustomer) => {
       const { navigate } = this.props.navigation;
       return (
-      <View key = {objCustomer._id}>
+      <View key = {objCustomer.Id}>
         <View style={styles.container}>
           <View style={{ flex: 1, flexDirection: 'row' }}>
               <TouchableOpacity style={styles.buttonContainer} onPress={() => this.PasarDatosVista(objCustomer)}>
-                  <Text style={styles.buttonText}> {objCustomer.firstname} {objCustomer.lastname}</Text>
-                  <Text note>    {objCustomer._id} </Text>
+                  <Text style={styles.buttonText}> {objCustomer.CustomerRef ? objCustomer.CustomerRef.name : 'Tiburcio'}</Text>
+                  <Text note>    {objCustomer.Id} </Text>
               </TouchableOpacity>
               <View style={{ width: 50, height: 80, backgroundColor: 'gray', marginTop: 10 }} />
           </View>

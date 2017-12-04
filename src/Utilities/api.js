@@ -1,12 +1,12 @@
 var api = {
   getRovers(){
-    var url= 'https://api-soft.herokuapp.com/clients';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
+    var url= 'https://api-soft.herokuapp.com/customers';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
    return fetch(url).then((res)=> res.json());
 
  },
 
   getProduct(){
-    var url= 'https://api-soft.herokuapp.com/products';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
+    var url= 'https://api-soft.herokuapp.com/items';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
    return fetch(url).then((res)=> res.json());
 
  },
@@ -14,6 +14,15 @@ var api = {
    var url= `https://api-soft.herokuapp.com/logon/${email}/${password}`;
    return fetch(url).then((res)=> res.json());
  },
+ getCustomer(id) {
+   var url= `https://api-soft.herokuapp.com/customers/${id}`;
+   return fetch(url).then((res)=> res.json());
+ },
+ getOrders(){
+   var url= 'https://api-soft.herokuapp.com/sales';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
+  return fetch(url).then((res)=> res.json());
+
+},
  getLoginInfo(){
    var url= 'https://api-soft.herokuapp.com/clients';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
   //return fetch(url).then((res)=> res.json());

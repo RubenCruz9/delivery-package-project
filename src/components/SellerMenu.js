@@ -1,10 +1,12 @@
 import React from 'react';
-import{App, Platform, StyleSheet, AppRegistry} from 'react-native';
+import{App, Platform, StyleSheet, AppRegistry, Image} from 'react-native';
 import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input, Tab, Tabs,ScrollableTab } from "native-base";
 import ClientList from './ClientList';
 import CreateOrder from './CreateOrder';
 import OrderList from './OrderList';
 import ProductList from './ProductList';
+
+const img = 'https://medialoot.com/preview/atmosphere-app-backgrounds/img/iphone-3.jpg';
 
 export default class SellerMenu extends React.Component {
 
@@ -23,20 +25,29 @@ export default class SellerMenu extends React.Component {
 
       <Tabs initialP age={0} renderTabBar={()=> <ScrollableTab />}>
         <Tab heading="Clientes">
-          <ClientList navigation={this.props.navigation} />
+        <Image source={{uri:img}} style={styles.container}>
+        <Content>
+        <ClientList navigation={this.props.navigation} />
+        </Content>
+        </Image>
         </Tab>
 
         <Tab heading="Crear Orden">
-          <CreateOrder/>
+        <Image source={{uri:img}} style={styles.container}>
+        <CreateOrder/>
+        </Image>
         </Tab>
 
       <Tab heading="Ordenes">
-        <OrderList navigation={this.props.navigation}/>
+      <Image source={{uri:img}} style={styles.container}>
+      <OrderList navigation={this.props.navigation}/>
+      </Image>
       </Tab>
 
     <Tab heading="Productos">
-      <ProductList navigation={this.props.navigation}/>
-
+    <Image source={{uri:img}} style={styles.container}>
+    <ProductList navigation={this.props.navigation}/>
+    </Image>
     </Tab>
     </Tabs>
 
@@ -47,9 +58,9 @@ export default class SellerMenu extends React.Component {
 const styles = StyleSheet.create({
 
         container: {
-            flex: 1,
-            padding: 30,
-            backgroundColor: '#bdc3c7',
+            flex: 5,
+            //padding: 30,
+            //backgroundColor: '#bdc3c7',
         },
         title: {
             color: 'black',

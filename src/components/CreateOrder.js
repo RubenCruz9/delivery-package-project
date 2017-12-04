@@ -1,9 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Container, Text, Button, Header, Left, Right, Body, Title, Item, Content, Icon, List, ListItem, Input } from "native-base";
+import { View, TextInput } from 'react-native';
+import { Container, Text, Button, Header, Left, Right, Body, Title, Content,
+   Icon, List, ListItem, InputLeft, Picker, Form, Item as FormItem } from "native-base";
 
 import api from '../Utilities/api.js';
-
+const Item = Picker.Item;
 
 export default class CreateOrder extends React.Component {
 
@@ -11,7 +12,8 @@ export default class CreateOrder extends React.Component {
       super(props);
       this.state = {
           data: [],
-          qty: 0,
+          customers: [],
+          cliente: "key3",
       }
   }
 
@@ -20,7 +22,23 @@ export default class CreateOrder extends React.Component {
           this.setState({
               data: res
           })
-      });
+    });
+
+    api.getRovers().then((res)=> {
+          // var tempCustomers = [];
+          // for (var i=0; i < res.length; i++) {
+          //     tempCustomers.push(res[i]["GivenName"] + " "+ );
+          // }
+          this.setState({
+              customers: res
+          })
+    });
+  }
+
+  onValueChange3(value: string) {
+    this.setState({
+      selected3: value
+    });
   }
 
   onAddPress = (intIndex) => {
@@ -35,6 +53,35 @@ export default class CreateOrder extends React.Component {
     });
     this.setState({ data: test });
   }
+
+  onValueChange(value: string) {
+      this.setState({
+        cliente: value
+      });
+    }
+
+
+  selectClient = () => {
+    return (<Form>
+      <Picker
+        mode="dropdown"
+        placeholder="Select One"
+        note={false}
+        selectedValue={this.state.cliente}
+        onValueChange={this.onValueChange.bind(this)}
+      >
+
+      {
+        this.state.customers.map((objCustomer) => {
+          return (<Item label={`${objCustomer.GivenName} ${objCustomer.FamilyName}`} value={ objCustomer.Id } />);
+        })
+      }
+      </Picker>
+    </Form>)
+
+  }
+
+
 
   onRemovePress = (intIndex) => {
     const objData = this.state.data[intIndex] || {};
@@ -51,38 +98,36 @@ export default class CreateOrder extends React.Component {
 
   render() {
     const data = this.state.data;
-    console.log(data[0]);
-
+    //console.log(this.state.customers);
     var items = data.map(item => item);
 
     return (
         <Container>
-              <Header searchBar rounded>
-                <Item>
-                  <Icon name="search" />
-                  <Input placeholder="Search" />
-                </Item>
-                <Button transparent>
-                  <Text>Search</Text>
-                </Button>
+              <Header>
+              <Left>
+              { this.selectClient() }
+              </Left>
+
               </Header>
 
               <Content>
+
                 <List dataArray={items}
                   renderRow={(item, key, index) =>
-                    <ListItem key={item._id}>
+                    <ListItem key={item.Id} style={{marginLeft:1, marginRight:-14}}>
                       <View style={{flex: 1,flexDirection: 'column',justifyContent: 'space-between',}}>
-                        <View>
-                          <Text> {item.name } </Text><Text note>RD${item.price} </Text>
+                        <View >
+                          <Text> {item.Name } </Text><Text note>RD${item.UnitPrice} </Text>
                         </View>
                       <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Button bordered primary onPress={ () => { this.onRemovePress(index) }}>
                          <Text>-</Text>
                         </Button>
 
-                      <Item regular style={{ width: 80}}>
-                        <Input editable={false} value={item.count} style={{ marginLeft:100 }} />
-                        </Item>
+
+                        <Text> {item.count} </Text>
+
+
                       <Button bordered primary onPress={ () => { this.onAddPress(index) }}>
                           <Text>+</Text>
                       </Button>
