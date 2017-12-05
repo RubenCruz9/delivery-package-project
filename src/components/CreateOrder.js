@@ -13,12 +13,19 @@ export default class CreateOrder extends React.Component {
       this.state = {
           data: [],
           customers: [],
-          cliente: "key3",
+          cliente: '',
+          selectedProducts: []
       }
   }
 
   componentWillMount(){
     api.getProduct().then((res)=> {
+
+      res = res.filter((item, index) => {
+        if (item.TrackQtyOnHand) {
+          return item;
+        }
+      });
           this.setState({
               data: res
           })
@@ -41,6 +48,36 @@ export default class CreateOrder extends React.Component {
     });
   }
 
+  prepareOrderJson() {
+      var order = {
+        "Line": [],
+        "CustomerRef" : {}
+      };
+      // console.log(this.state.selectedProducts);
+      order["CustomerRef"]["value"] = this.state.cliente.Id;
+      order["CustomerRef"]["name"] = this.state.cliente.DisplayName;
+      for (var i = 0; i < this.state.selectedProducts.length ; i++) {
+          var tempData = {
+              "Description": this.state.selectedProducts[i].Description,
+              "Amount": this.state.selectedProducts[i].UnitPrice * this.state.selectedProducts[i].count,
+              "DetailType": "SalesItemLineDetail",
+              "SalesItemLineDetail": {
+                  "ItemRef": {
+                      "value": this.state.selectedProducts[i].Id,
+                      "name": this.state.selectedProducts[i].Name
+                  },
+                  "UnitPrice": this.state.selectedProducts[i].UnitPrice,
+                  "Qty": this.state.selectedProducts[i].count
+              }
+          };
+          order["Line"].push(tempData);
+      }
+
+      api.createOrder(order).then((res)=> {
+          console.log(res);
+      });
+  }
+
   onAddPress = (intIndex) => {
     const objData = this.state.data[intIndex] || {};
     const newData = { count: 0, ...objData };
@@ -51,7 +88,12 @@ export default class CreateOrder extends React.Component {
       }
       return item;
     });
-    this.setState({ data: test });
+    const products = test.filter((item, index) => {
+      if (item.count) {
+        return item;
+      }
+    });
+    this.setState({ selectedProducts: products, data: test });
   }
 
   onValueChange(value: string) {
@@ -73,7 +115,7 @@ export default class CreateOrder extends React.Component {
 
       {
         this.state.customers.map((objCustomer) => {
-          return (<Item label={`${objCustomer.GivenName} ${objCustomer.FamilyName}`} value={ objCustomer.Id } />);
+          return (<Item label={`${objCustomer.GivenName} ${objCustomer.FamilyName}`} value={ objCustomer } />);
         })
       }
       </Picker>
@@ -93,7 +135,12 @@ export default class CreateOrder extends React.Component {
       }
       return item;
     });
-    this.setState({ data: test });
+    const products = test.filter((item, index) => {
+      if (item.count) {
+        return item;
+      }
+    });
+    this.setState({ selectedProducts: products, data: test });
   }
 
   render() {
@@ -107,6 +154,14 @@ export default class CreateOrder extends React.Component {
               <Left>
               { this.selectClient() }
               </Left>
+              <Right>
+              <Button
+                style={{marginRight: 0}}
+                disabled={!this.state.cliente}
+                onPress={ () => { this.prepareOrderJson() }}>
+                <Text>Realizar Orden</Text>
+              </Button>
+              </Right>
 
               </Header>
 

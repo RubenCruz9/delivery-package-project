@@ -18,6 +18,17 @@ var api = {
    var url= `https://api-soft.herokuapp.com/customers/${id}`;
    return fetch(url).then((res)=> res.json());
  },
+ createOrder(object) {
+     var url = `https://api-soft.herokuapp.com/sales`;
+     return fetch(url, {
+         method: "POST",
+         headers: {
+             Accept: "application/json",
+             "Content-Type": "application/json"
+         },
+         body: JSON.stringify(object)
+     }).then((res) => res.json());
+ },
  getOrders(){
    var url= 'https://api-soft.herokuapp.com/sales';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
   return fetch(url).then((res)=> res.json());
