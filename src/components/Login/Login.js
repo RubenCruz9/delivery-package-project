@@ -25,8 +25,7 @@ export default class Login extends React.Component {
     this.state={
       data: [],
       email : '',
-      password : ''
-
+      password : '',
     };
   }
 
@@ -37,21 +36,22 @@ export default class Login extends React.Component {
   //         })
   //     });
   // }
+  getUserInfo(Id) {
+    api.getEmployee(Id).then((res)=> {
+      if (res && res.Type =='Vendedor') {
+          this.props.navigation.navigate('SellerPantalla', res)
+      }
+    });
+  }
+
   validation(){
-    // var email = 'Alexis@gmail.com';
-    // var password = 'Alex12300';
-this.props.navigation.navigate('SellerPantalla', {})
+//this.props.navigation.navigate('SellerPantalla', {})
 //this.props.navigation.navigate('PantallaChofer', {})
 
     if (this.state.email.trim() && this.state.password.trim()) {
-      api.validateUser(this.state.email.trim(), this.state.password.trim()).then((res)=> {
-              if (res && res.tipo) {
-                if (res.tipo=='vendedor') {
-                    this.props.navigation.navigate('SellerPantalla', {})
-                }
-                else{
-                  this.props.navigation.navigate('PantallaChofer', {})
-                }
+      api.validateUser(this.state.email.trim()).then((res)=> {
+              if (res && res.userId) {
+                this.getUserInfo(res.userId);
               } else {
                 alert('Usuario o contrasena incorrecta')
               }

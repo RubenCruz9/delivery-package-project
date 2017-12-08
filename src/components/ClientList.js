@@ -11,7 +11,8 @@ export default class ClientList extends React.Component {
       constructor(props){
           super(props);
           this.state = {
-              data: []
+              data: [],
+              loggedUser: this.props.user
           }
       }
 
@@ -25,11 +26,22 @@ export default class ClientList extends React.Component {
       }
 
       componentWillMount(){
-        api.getRovers().then((res)=> {
-              this.setState({
-                  data: res
-              })
-          });
+          api.getRovers().then((customers)=> {
+                api.getCustomFields().then((res)=> {
+                  var filteredOrders = [];
+                  for (var i=0; i < customers.length; i++) {
+                    var x = res.find((item) => {
+                      if (item.userId == customers[i].Id && item.entity == "Customer" && item.fieldValue == this.state.loggedUser.Id) {
+                        filteredOrders.push(customers[i]);
+                      }
+                    });
+                  }
+                  console.log(filteredOrders);
+                  this.setState({
+                      data: filteredOrders
+                  })
+                });
+            });
       }
 
       renderClient = (objCustomer) => {
@@ -75,7 +87,7 @@ export default class ClientList extends React.Component {
                           { payments }
                   </View>
               </ScrollView>
-              
+
               </Content>
 
             </Container>

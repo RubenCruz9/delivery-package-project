@@ -10,12 +10,23 @@ var api = {
    return fetch(url).then((res)=> res.json());
 
  },
- validateUser(email, password) {
-   var url= `https://api-soft.herokuapp.com/logon/${email}/${password}`;
-   return fetch(url).then((res)=> res.json());
+ validateUser(email) {
+   var url = `https://api-soft.herokuapp.com/logon`;
+   return fetch(url, {
+       method: "POST",
+       headers: {
+           Accept: "application/json",
+           "Content-Type": "application/json"
+       },
+       body: JSON.stringify({"fieldValue" : email})
+   }).then((res) => res.json());
  },
  getCustomer(id) {
    var url= `https://api-soft.herokuapp.com/customers/${id}`;
+   return fetch(url).then((res)=> res.json());
+ },
+ getEmployee(id) {
+   var url= `https://api-soft.herokuapp.com/employees/${id}`;
    return fetch(url).then((res)=> res.json());
  },
  createOrder(object) {
@@ -29,6 +40,22 @@ var api = {
          body: JSON.stringify(object)
      }).then((res) => res.json());
  },
+ createCustomField(object) {
+   var url = `https://api-soft.herokuapp.com/customerFields`;
+   return fetch(url, {
+       method: "POST",
+       headers: {
+           Accept: "application/json",
+           "Content-Type": "application/json"
+       },
+       body: JSON.stringify(object)
+   }).then((res) => res.json());
+ },
+ getCustomFields(){
+   var url= 'https://api-soft.herokuapp.com/customerFields';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
+  return fetch(url).then((res)=> res.json());
+
+},
  getOrders(){
    var url= 'https://api-soft.herokuapp.com/sales';/*'https://api-soft.herokuapp.com/tasks'*//*'http://api-soft.herokuapp.com/tasks/5a0a5ad2734d1d4ef311991a'; *//*'https://api-soft.herokuapp.com/tasks';*/
   return fetch(url).then((res)=> res.json());

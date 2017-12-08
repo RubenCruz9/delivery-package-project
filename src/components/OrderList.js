@@ -9,7 +9,8 @@ export default class ListDividerExample extends Component {
   constructor(props){
       super(props);
       this.state = {
-          data: []
+          data: [],
+          loggedUser: this.props.user
       }
   }
 
@@ -23,10 +24,26 @@ export default class ListDividerExample extends Component {
   }
 
   componentWillMount(){
-    api.getOrders().then((res)=> {
-          this.setState({
-              data: res
-          })
+    api.getOrders().then((orders)=> {
+          // this.setState({
+          //     data: res
+          // })
+          // for (var i=0; i < orders.length; i++) {
+
+          api.getCustomFields().then((res)=> {
+            var filteredOrders = [];
+            for (var i=0; i < orders.length; i++) {
+              var x = res.find((item) => {
+                if (item.userId == orders[i].Id && item.entity == "Sales" && item.fieldValue == this.state.loggedUser.Id) {
+                  filteredOrders.push(orders[i]);
+                }
+              });
+            }
+            console.log(filteredOrders);
+            this.setState({
+                data: filteredOrders
+            })
+          });
       });
   }
 

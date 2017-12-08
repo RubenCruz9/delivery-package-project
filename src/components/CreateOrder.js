@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TextInput } from 'react-native';
 import { Container, Text, Button, Header, Left, Right, Body, Title, Content,
    Icon, List, ListItem, InputLeft, Picker, Form, Item as FormItem } from "native-base";
+   import { NavigationActions } from 'react-navigation';
 
 import api from '../Utilities/api.js';
 const Item = Picker.Item;
@@ -14,7 +15,8 @@ export default class CreateOrder extends React.Component {
           data: [],
           customers: [],
           cliente: '',
-          selectedProducts: []
+          selectedProducts: [],
+          loggedUser: this.props.user
       }
   }
 
@@ -49,6 +51,7 @@ export default class CreateOrder extends React.Component {
   }
 
   prepareOrderJson() {
+
       var order = {
         "Line": [],
         "CustomerRef" : {}
@@ -71,11 +74,32 @@ export default class CreateOrder extends React.Component {
               }
           };
           order["Line"].push(tempData);
+
+
       }
 
       api.createOrder(order).then((res)=> {
-          console.log(res);
+        console.log(res);
+        api.createCustomField({
+          "userId": res.Id,
+          "fieldName": "SellerId",
+          "fieldValue": this.state.loggedUser.Id,
+          "entity": "Sales"
+        }).then((result)=> {
+            alert('Ordren Creada Satisfactoriamente.');
+            this.PasarDatosVista(res)
+        });
       });
+  }
+
+  PasarDatosVista(_data)
+  {
+      console.log(this.props.navigation);
+      const { navigate } = this.props.navigation;
+      (props) => { navigate };
+      const data2 = _data;
+      console.log(navigate);
+      navigate('DetalleOrden', {data2});
   }
 
   onAddPress = (intIndex) => {
@@ -142,6 +166,8 @@ export default class CreateOrder extends React.Component {
     });
     this.setState({ selectedProducts: products, data: test });
   }
+
+
 
   render() {
     const data = this.state.data;

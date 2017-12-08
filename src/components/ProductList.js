@@ -26,10 +26,16 @@ export default class ProductList extends React.Component {
 
       componentWillMount(){
         api.getProduct().then((res)=> {
+
+          res = res.filter((item, index) => {
+            if (item.TrackQtyOnHand) {
+              return item;
+            }
+          });
               this.setState({
                   data: res
               })
-          });
+        });
       }
 
       renderClient = (objCustomer) => {

@@ -1,11 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Navigator,TouchableHighlight, FlatList} from 'react-native';
 
-//const Login = require("./src/component/loginView")
 import Login from './src/components/Login/Login.js';
 import Test from './src/components/Test.js';
 import ClientDetails from './src/components/ClientDetails.js';
-//import Orders from './src/components/Orders.js';
 import CreateOrder from './src/components/CreateOrder.js';
 import ProductDetail from './src/components/ProductDetail.js';
 import ClientList from './src/components/ClientList.js';
@@ -52,7 +50,10 @@ PantallaFirma:{
 },
 PantallaMapa:{
   screen: MapsView
-}
+},
+PantallaCrearOrden:{
+  screen: CreateOrder
+},
 
 
 

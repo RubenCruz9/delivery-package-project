@@ -12,9 +12,8 @@ export default class SellerMenu extends React.Component {
 
   constructor(props){
     super(props);
-    //console.log(props);
     this.state={
-
+      data: this.props.navigation.state.params,
     };
   }
 
@@ -27,20 +26,20 @@ export default class SellerMenu extends React.Component {
         <Tab heading="Clientes">
         <Image source={{uri:img}} style={styles.container}>
         <Content>
-        <ClientList navigation={this.props.navigation} />
+        <ClientList navigation={this.props.navigation} user={this.state.data}/>
         </Content>
         </Image>
         </Tab>
 
         <Tab heading="Crear Orden">
         <Image source={{uri:img}} style={styles.container}>
-        <CreateOrder/>
+        <CreateOrder navigation={this.props.navigation} user={this.state.data}/>
         </Image>
         </Tab>
 
       <Tab heading="Ordenes">
       <Image source={{uri:img}} style={styles.container}>
-      <OrderList navigation={this.props.navigation}/>
+      <OrderList navigation={this.props.navigation} user={this.state.data}/>
       </Image>
       </Tab>
 
